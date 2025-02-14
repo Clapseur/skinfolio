@@ -17,11 +17,14 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api/steam': {
+      '/steamapi': {
         target: 'https://api.steampowered.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/steam/, ''),
-      },
-    },
+        rewrite: (path) => path.replace(/^\/steamapi/, ''),
+        headers: {
+          'Access-Control-Allow-Origin': '*'
+        }
+      }
+    }
   },
 })
