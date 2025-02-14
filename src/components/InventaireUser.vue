@@ -309,7 +309,7 @@ const getWearText = computed(() => {
 <template>
   <div>
     <div class="total-price">Total Inventory Value: ${{ FormatedTotalPrice }}</div>
-    <img src="./assets/logo.png" alt="" />
+    <img src="../assets/logo.png" alt="" />
     <button @click="toggleMenu" class="hamburguesa">☰ Filtres</button>
     <div v-if="showMenu" class="menu">
       <p class="menu-title">Filtres</p>
