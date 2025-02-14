@@ -107,18 +107,15 @@ const convertToSteamId3 = async (url) => {
     if (type === 'profiles') {
       return identifier
     } else {
-      const response = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.steampowered.com/ISteamUser/ResolveVanityURL/v1/`, {
-        params: {
-          key: '74D34665E9EB2F20DB4219D8604FBEBE',
-          vanityurl: identifier
-        },
-        headers: {
-          'Origin': 'https://skinfolio-git-v2-clean-clapseurs-projects.vercel.app'
-        }
-      })
+      // Using allorigins.win as CORS proxy
+      const encodedUrl = encodeURIComponent(
+        `https://api.steampowered.com/ISteamUser/ResolveVanityURL/v1/?key=74D34665E9EB2F20DB4219D8604FBEBE&vanityurl=${identifier}`
+      )
+      const response = await axios.get(`https://api.allorigins.win/get?url=${encodedUrl}`)
 
-      if (response.data.response.success === 1) {
-        return response.data.response.steamid
+      const data = JSON.parse(response.data.contents)
+      if (data.response.success === 1) {
+        return data.response.steamid
       } else {
         throw new Error('Profil Steam introuvable')
       }
