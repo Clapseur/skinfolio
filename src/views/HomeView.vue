@@ -107,11 +107,8 @@ const convertToSteamId3 = async (url) => {
     if (type === 'profiles') {
       return identifier
     } else {
-      const response = await axios.get('/steamapi/ISteamUser/ResolveVanityURL/v1/', {
-        params: {
-          key: '74D34665E9EB2F20DB4219D8604FBEBE',
-          vanityurl: identifier
-        }
+      const response = await axios.get('/api/steam', {
+        params: { vanityurl: identifier }
       })
 
       if (response.data.response.success === 1) {
