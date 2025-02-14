@@ -103,21 +103,14 @@ const convertToSteamId3 = async (url) => {
     }
 
     const [, type, identifier] = match
-    const apiKey = '74D34665E9EB2F20DB4219D8604FBEBE'
 
     if (type === 'profiles') {
-      const steam64Id = BigInt(identifier)
-      const accountId = Number(steam64Id - 76561197960265728n)
-      return `[U:1:${accountId}]`
+      return identifier
     } else {
-      const response = await axios.get(
-        `/api/steam/ISteamUser/ResolveVanityURL/v1/?key=${apiKey}&vanityurl=${identifier}`,
-      )
+      const response = await axios.get(`/api/steam/resolve?vanityurl=${identifier}`)
 
       if (response.data.response.success === 1) {
-        const steam64Id = BigInt(response.data.response.steamid)
-        const accountId = Number(steam64Id - 76561197960265728n)
-        return `[U:1:${accountId}]`
+        return response.data.response.steamid
       } else {
         throw new Error('Profil Steam introuvable')
       }
