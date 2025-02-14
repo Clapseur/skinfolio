@@ -107,7 +107,9 @@ const convertToSteamId3 = async (url) => {
     if (type === 'profiles') {
       return identifier
     } else {
-      const response = await axios.get(`/api/steam/resolve?vanityurl=${identifier}`)
+      const response = await axios.get(`/api/steam/resolve`, {
+        params: { vanityurl: identifier }
+      })
 
       if (response.data.response.success === 1) {
         return response.data.response.steamid
@@ -117,10 +119,7 @@ const convertToSteamId3 = async (url) => {
     }
   } catch (error) {
     console.error('Erreur de conversion:', error)
-    if (error.message.includes('Format URL')) {
-      throw error
-    }
-    throw new Error('Erreur lors de la conversion du lien Steam. Vérifiez que le profil existe.')
+    throw error
   }
 }
 </script>
