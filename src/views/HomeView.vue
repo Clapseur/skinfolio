@@ -107,10 +107,13 @@ const convertToSteamId3 = async (url) => {
     if (type === 'profiles') {
       return identifier
     } else {
-      const response = await axios.get('https://api.steampowered.com/ISteamUser/ResolveVanityURL/v1/', {
+      const response = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.steampowered.com/ISteamUser/ResolveVanityURL/v1/`, {
         params: {
           key: '74D34665E9EB2F20DB4219D8604FBEBE',
           vanityurl: identifier
+        },
+        headers: {
+          'Origin': 'https://skinfolio-git-v2-clean-clapseurs-projects.vercel.app'
         }
       })
 
